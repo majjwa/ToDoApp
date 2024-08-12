@@ -1,4 +1,5 @@
-//  InProgressViewController.m
+//  
+// InProgressViewController.m
 //  toDoApplication
 //
 //  Created by marwa maky on 12/08/2024.
@@ -6,7 +7,9 @@
 
 #import "InProgressViewController.h"
 #import "Tasks.h"
-@interface InProgressViewController () 
+#import "DetailsViewController.h"
+
+@interface InProgressViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *inProgressTable;
 @property (strong, nonatomic) NSMutableArray<Tasks *> *allTasks;
@@ -25,7 +28,10 @@
     [self filterInProgressTasks];
     
     [self.inProgressTable reloadData];
-} - (void)viewWillAppear:(BOOL)animated{
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self loadTasks];
     [self filterInProgressTasks];
     [self.inProgressTable reloadData];
@@ -58,7 +64,6 @@
     }
 }
 
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.inProgressTasks.count;
 }
@@ -75,6 +80,44 @@
     cell.imageView.image = [UIImage imageNamed:task.image];
     
     return cell;
+}
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Tasks *taskToEdit = self.inProgressTasks[indexPath.row];
+    
+    UIContextualAction *editAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal
+       title:@"Edit"
+           handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        DetailsViewController *detailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
+        detailsVC.taskToEdit = taskToEdit;
+        detailsVC.isEditingTask = YES;
+        [self.navigationController pushViewController:detailsVC animated:YES];
+        completionHandler(YES);
+    }];
+    editAction.backgroundColor = [UIColor darkGrayColor];
+    
+  
+    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive
+       title:@"Delete" handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        [self.inProgressTasks removeObject:taskToEdit];
+        [self.allTasks removeObject:taskToEdit];
+        [self saveTasks];
+        [self.inProgressTable deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        completionHandler(YES);
+    }];
+    deleteAction.backgroundColor = [UIColor lightGrayColor];
+    
+    UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[editAction, deleteAction]];
+    config.performsFirstActionWithFullSwipe = NO;
+    
+    return config;
+}
+
+- (void)saveTasks {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.allTasks requiringSecureCoding:YES error:nil];
+    [defaults setObject:data forKey:@"userTasks"];
+    [defaults synchronize];
 }
 
 @end

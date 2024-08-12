@@ -1,3 +1,4 @@
+// 
 //  DoneViewController.m
 //  toDoApplication
 //
@@ -10,7 +11,6 @@
 @interface DoneViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *DoneTable;
-
 
 @end
 
@@ -28,11 +28,14 @@
   
     [self.DoneTable reloadData];
 }
-- (void)viewWillAppear:(BOOL)animated{
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self loadTasks];
     [self organizeTasksByPriority];
     [self.DoneTable reloadData];
 }
+
 - (void)loadTasks {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *data = [defaults objectForKey:@"userTasks"];
@@ -54,15 +57,14 @@
     self.tasksByPriority = [NSMutableArray arrayWithObjects:[NSMutableArray array], [NSMutableArray array], [NSMutableArray array], nil];
     
     for (Tasks *task in self.allTasks) {
-        if (task.type == 2) {
+        if (task.type == 2) { // Filter for "Done" tasks
             [self.tasksByPriority[task.priority] addObject:task];
         }
     }
 }
 
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 3; // Low, Medium, High
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -95,6 +97,32 @@
         default:
             return @"";
     }
+}
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Tasks *taskToDelete = self.tasksByPriority[indexPath.section][indexPath.row];
+
+    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive
+ title:@"Delete" handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        [self.tasksByPriority[indexPath.section] removeObject:taskToDelete];
+        [self.allTasks removeObject:taskToDelete];
+        [self saveTasks];
+        [self.DoneTable deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        completionHandler(YES);
+    }];
+    deleteAction.backgroundColor = [UIColor lightGrayColor];
+    
+    UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
+    config.performsFirstActionWithFullSwipe = NO;
+    
+    return config;
+}
+
+- (void)saveTasks {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.allTasks requiringSecureCoding:YES error:nil];
+    [defaults setObject:data forKey:@"userTasks"];
+    [defaults synchronize];
 }
 
 @end

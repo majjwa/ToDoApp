@@ -1,3 +1,10 @@
+//
+// TodoNotesViewController.m
+//  toDoApplication
+//
+//  Created by marwa maky on 12/08/2024.
+//
+
 #import "TodoNotesViewController.h"
 #import "UserDefaults.h"
 #import "Tasks.h"
@@ -19,7 +26,6 @@
     self.mySearchbar.delegate = self;
     self.filteredTasks = [NSMutableArray array];
     self.isSearching = NO;
-    [self loadTasks];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -28,21 +34,33 @@
     [self.toDoNotesTable reloadData];
 }
 
+
+
 - (void)loadTasks {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *data = [defaults objectForKey:@"userTasks"];
     if (data) {
         NSError *error;
         NSSet *classes = [NSSet setWithArray:@[[NSMutableArray class], [Tasks class]]];
-        self.tasksArray = [NSKeyedUnarchiver unarchivedObjectOfClasses:classes fromData:data error:&error];
+        NSArray<Tasks *> *allTasks = [NSKeyedUnarchiver unarchivedObjectOfClasses:classes fromData:data error:&error];
         if (error) {
             NSLog(@"Error unarchiving tasks: %@", error.localizedDescription);
         }
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.type == %d", 0];
+        self.tasksArray = [[allTasks filteredArrayUsingPredicate:predicate] mutableCopy];
+        
     } else {
         self.tasksArray = [NSMutableArray array];
     }
 }
 
+- (void)saveTasks {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *newData = [NSKeyedArchiver archivedDataWithRootObject:self.tasksArray requiringSecureCoding:YES error:nil];
+    [defaults setObject:newData forKey:@"userTasks"];
+    [defaults synchronize];
+}
 - (IBAction)addEditButton:(UIBarButtonItem *)sender {
     UIViewController *detailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
     [self.navigationController pushViewController:detailsVC animated:YES];
@@ -94,13 +112,12 @@
        title:@"Edit"
            handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         DetailsViewController *detailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
-        
         detailsVC.taskToEdit = taskToEdit;
         detailsVC.isEditingTask = YES;
         [self.navigationController pushViewController:detailsVC animated:YES];
         completionHandler(YES);
     }];
-    editAction.backgroundColor = [UIColor blackColor];
+    editAction.backgroundColor = [UIColor darkGrayColor];
     
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive
    title:@"Delete" handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
@@ -109,22 +126,12 @@
         [self.toDoNotesTable deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         completionHandler(YES);
     }];
-    deleteAction.backgroundColor = [UIColor redColor];
+    deleteAction.backgroundColor = [UIColor lightGrayColor];
     
     UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[editAction, deleteAction]];
     config.performsFirstActionWithFullSwipe = NO;
     
     return config;
-}
-
-
-
-
-- (void)saveTasks {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSData *newData = [NSKeyedArchiver archivedDataWithRootObject:self.tasksArray requiringSecureCoding:YES error:nil];
-    [defaults setObject:newData forKey:@"userTasks"];
-    [defaults synchronize];
 }
 
 @end

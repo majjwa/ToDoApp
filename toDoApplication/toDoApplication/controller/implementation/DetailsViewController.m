@@ -1,3 +1,8 @@
+//
+// TodoNotesViewController.m
+//  toDoApplication
+//  Created by marwa maky on 12/08/2024.
+
 #import "DetailsViewController.h"
 #import "Tasks.h"
 
@@ -106,7 +111,7 @@
     [defaults setObject:newData forKey:@"userTasks"];
     [defaults synchronize];
     
-    NSString *message = self.isEditingTask ? @"Are u sure u want to edit? " : @"Add Successful";
+    NSString *message = self.isEditingTask ? @"Are u sure u want to edit? " : @"Task Added";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert"
   message:message preferredStyle:UIAlertControllerStyleActionSheet];
     

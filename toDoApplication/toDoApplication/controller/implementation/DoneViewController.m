@@ -26,13 +26,13 @@
     [self TasksByPriority];
     
     [self.DoneTable reloadData];
-    [self updatePlaceholderVisibility]; // Update visibility of default image
+    [self updateImage];
 }
 
-- (void)updatePlaceholderVisibility {
-    // Show the placeholder image if there are no tasks
+- (void)updateImage{
+
     self.defaultimg.hidden = self.allTasks.count > 0;
-    self.DoneTable.hidden = self.allTasks.count == 0; // Hide table view if no tasks
+    self.DoneTable.hidden = self.allTasks.count == 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -40,7 +40,7 @@
     [self loadTasks];
     [self TasksByPriority];
     [self.DoneTable reloadData];
-    [self updatePlaceholderVisibility]; // Update visibility on appearance
+    [self updateImage];
 }
 
 - (void)loadTasks {
@@ -72,14 +72,21 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
 }
-
+/*
+ 
+ Tasks *task = self.tasksByPriority[indexPath.section][indexPath.row];
+ c
+ */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    [self updatePlaceholderVisibility]; // Ensure placeholder visibility is updated
+    [self updateImage];
     return self.tasksByPriority[section].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    
+    
+   
     
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
@@ -115,7 +122,7 @@
         [self.allTasks removeObject:taskToDelete];
         [self saveTasks];
         [self.DoneTable deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self updatePlaceholderVisibility]; // Update placeholder visibility after deletion
+        [self updateImage];
         completionHandler(YES);
     }];
     deleteAction.backgroundColor = [UIColor lightGrayColor];

@@ -11,9 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TodoNotesViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
-@property (nonatomic, strong) NSMutableArray<Tasks *> *tasksArray;
+@property  NSMutableArray<Tasks *> *tasksArray;
 //search bar property
-@property (nonatomic, strong) NSMutableArray<Tasks *> *filteredTasks;
+@property  NSMutableArray<Tasks *> *filteredTasks;
 @property BOOL isSearching;
 @end
 

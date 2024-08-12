@@ -28,10 +28,10 @@
     self.filteredTasks = [NSMutableArray array];
     //isfiltered = Yes
     self.isSearching = NO;
-    [self updatePlaceholderVisibility];
+    [self updateimage];
     }
-
-    - (void)updatePlaceholderVisibility {
+//Default img
+    - (void)updateimage {
         self.defaultImage1.hidden = self.tasksArray.count > 0;
     }
 
@@ -82,7 +82,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    [self updatePlaceholderVisibility];
+    [self updateimage];
 
     return self.isSearching ? self.filteredTasks.count : self.tasksArray.count;
 }
@@ -113,13 +113,16 @@
     }
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+- (void)CancelButton:(UISearchBar *)searchBar {
     [searchBar setText:@""];
     [searchBar resignFirstResponder];
     self.isSearching = NO;
     [self.filteredTasks removeAllObjects];
     [self.toDoNotesTable reloadData];
 }
+
+
+
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     Tasks *taskToEdit = self.isSearching ? self.filteredTasks[indexPath.row] : self.tasksArray[indexPath.row];

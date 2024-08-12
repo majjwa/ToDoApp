@@ -22,7 +22,8 @@
     }
     
     [self updateImage:self.prioritySegement.selectedSegmentIndex];
-    [self.prioritySegement addTarget:self action:@selector(priorityChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.prioritySegement addTarget:self action:@selector(priorityChanged:) 
+        forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)addFieldsWithTask:(Tasks *)task {
@@ -125,19 +126,17 @@
 
 
 - (void)updateImage:(NSInteger)priorityIndex {
-    NSString *imageName;
     switch (priorityIndex) {
         case 0:
-            imageName = @"low";
+            self.myImage.image = [UIImage imageNamed:@"low"];
             break;
         case 1:
-            imageName = @"med";
+            self.myImage.image = [UIImage imageNamed:@"med"];
             break;
         default:
-            imageName = @"high";
+            self.myImage.image = [UIImage imageNamed:@"high"];
             break;
     }
-    self.myImage.image = [UIImage imageNamed:imageName];
 }
 
 - (void)priorityChanged:(UISegmentedControl *)sender {

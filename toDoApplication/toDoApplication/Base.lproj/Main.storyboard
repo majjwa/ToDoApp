@@ -82,7 +82,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8SZ-E6-oUy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2385.4961832061067" y="397.88732394366201"/>
+            <point key="canvasLocation" x="-2564" y="94"/>
         </scene>
         <!--Todo Notes-->
         <scene sceneID="n1m-sf-aYx">
@@ -136,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Qx-Ka-ZiT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-479" y="363"/>
+            <point key="canvasLocation" x="-857" y="94"/>
         </scene>
         <!--Details View Controller-->
         <scene sceneID="8Y5-nB-ukW">
@@ -147,28 +147,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uW1-y1-4gh">
-                                <rect key="frame" x="32" y="633" width="45" height="21"/>
+                                <rect key="frame" x="18" y="633" width="45" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.78039215689999997" green="0.1166306273" blue="0.43714213769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Type :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btJ-Ef-RQR">
-                                <rect key="frame" x="32" y="542" width="47" height="21"/>
+                                <rect key="frame" x="16" y="538" width="47" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.78039215689999997" green="0.1166306273" blue="0.43714213769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Prioity :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SwC-UQ-iDo">
-                                <rect key="frame" x="32" y="449" width="58" height="21"/>
+                                <rect key="frame" x="16" y="443" width="58" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.78039215689999997" green="0.1166306273" blue="0.43714213769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zff-Py-3Fd">
-                                <rect key="frame" x="32" y="259" width="42" height="21"/>
+                                <rect key="frame" x="16" y="259" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.78039215689999997" green="0.1166306273" blue="0.43714213769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -224,12 +224,8 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="123.rectangle.hi" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Dzv-X4-Ojn">
-                                <rect key="frame" x="100" y="120" width="193" height="101"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description :" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxG-oK-Txp">
-                                <rect key="frame" x="32" y="341" width="97" height="21"/>
+                                <rect key="frame" x="16" y="341" width="97" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.78039215689999997" green="0.1166306273" blue="0.43714213769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -251,6 +247,11 @@
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="3" translatesAutoresizingMaskIntoConstraints="NO" id="Dzv-X4-Ojn">
+                                <rect key="frame" x="25" y="116" width="343" height="101"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.78039215689999997" green="0.1166306273" blue="0.43714213769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fRT-1O-Ysy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -258,7 +259,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jXk-ep-bfG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="281.67938931297709" y="362.67605633802816"/>
+            <point key="canvasLocation" x="28" y="94"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Grh-hv-EJN">
@@ -280,7 +281,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RoU-A7-lTJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2024" y="-627"/>
+            <point key="canvasLocation" x="-2563" y="-763"/>
         </scene>
         <!--Done -->
         <scene sceneID="tne-QT-ifu">
@@ -352,7 +353,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3318.320610687023" y="397.88732394366201"/>
+            <point key="canvasLocation" x="-3355" y="94"/>
         </scene>
         <!--todo-->
         <scene sceneID="De5-Ve-sKj">
@@ -376,11 +377,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kux-NU-eQI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1341" y="363"/>
+            <point key="canvasLocation" x="-1737" y="94"/>
         </scene>
     </scenes>
     <resources>
-        <image name="123.rectangle.hi" catalog="system" width="128" height="93"/>
+        <image name="3" width="520" height="494"/>
         <image name="checkmark.seal.fill" catalog="system" width="128" height="124"/>
         <image name="figure.run" catalog="system" width="115" height="128"/>
         <image name="list.bullet.rectangle.portrait" catalog="system" width="115" height="128"/>

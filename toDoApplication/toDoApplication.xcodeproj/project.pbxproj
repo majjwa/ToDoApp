@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		134897C72C699E8A00B888A6 /* Tasks.m in Sources */ = {isa = PBXBuildFile; fileRef = 134897C62C699E8A00B888A6 /* Tasks.m */; };
+		134897CA2C699EF500B888A6 /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 134897C92C699EF400B888A6 /* UserDefaults.m */; };
 		13ECF5842C69607D0090DB8E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ECF5832C69607D0090DB8E /* AppDelegate.m */; };
 		13ECF5872C69607D0090DB8E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ECF5862C69607D0090DB8E /* SceneDelegate.m */; };
 		13ECF58A2C69607D0090DB8E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ECF5892C69607D0090DB8E /* ViewController.m */; };
@@ -16,9 +18,15 @@
 		13ECF5952C6960800090DB8E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ECF5942C6960800090DB8E /* main.m */; };
 		13ECF59D2C6966600090DB8E /* TodoNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ECF59C2C6966600090DB8E /* TodoNotesViewController.m */; };
 		13FCE4E12C6989980021CBB2 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE4E02C6989980021CBB2 /* DetailsViewController.m */; };
+		13FCE4E42C698C6D0021CBB2 /* InProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE4E32C698C6D0021CBB2 /* InProgressViewController.m */; };
+		13FCE4E72C698C830021CBB2 /* DoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE4E62C698C830021CBB2 /* DoneViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		134897C52C699E8A00B888A6 /* Tasks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tasks.h; sourceTree = "<group>"; };
+		134897C62C699E8A00B888A6 /* Tasks.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tasks.m; sourceTree = "<group>"; };
+		134897C82C699EF400B888A6 /* UserDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDefaults.h; sourceTree = "<group>"; };
+		134897C92C699EF400B888A6 /* UserDefaults.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDefaults.m; sourceTree = "<group>"; };
 		13ECF57F2C69607D0090DB8E /* toDoApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = toDoApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13ECF5822C69607D0090DB8E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		13ECF5832C69607D0090DB8E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -35,6 +43,10 @@
 		13ECF59C2C6966600090DB8E /* TodoNotesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodoNotesViewController.m; sourceTree = "<group>"; };
 		13FCE4DF2C6989980021CBB2 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		13FCE4E02C6989980021CBB2 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		13FCE4E22C698C6D0021CBB2 /* InProgressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InProgressViewController.h; sourceTree = "<group>"; };
+		13FCE4E32C698C6D0021CBB2 /* InProgressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InProgressViewController.m; sourceTree = "<group>"; };
+		13FCE4E52C698C830021CBB2 /* DoneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoneViewController.h; sourceTree = "<group>"; };
+		13FCE4E62C698C830021CBB2 /* DoneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoneViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +63,10 @@
 		13ECF5762C69607D0090DB8E = {
 			isa = PBXGroup;
 			children = (
-				13FCE4DF2C6989980021CBB2 /* DetailsViewController.h */,
-				13FCE4E02C6989980021CBB2 /* DetailsViewController.m */,
+				134897C82C699EF400B888A6 /* UserDefaults.h */,
+				134897C92C699EF400B888A6 /* UserDefaults.m */,
+				134897C52C699E8A00B888A6 /* Tasks.h */,
+				134897C62C699E8A00B888A6 /* Tasks.m */,
 				13ECF5812C69607D0090DB8E /* toDoApplication */,
 				13ECF5802C69607D0090DB8E /* Products */,
 			);
@@ -80,6 +94,12 @@
 				13ECF5902C6960800090DB8E /* LaunchScreen.storyboard */,
 				13ECF5932C6960800090DB8E /* Info.plist */,
 				13ECF5942C6960800090DB8E /* main.m */,
+				13FCE4E52C698C830021CBB2 /* DoneViewController.h */,
+				13FCE4E62C698C830021CBB2 /* DoneViewController.m */,
+				13FCE4E22C698C6D0021CBB2 /* InProgressViewController.h */,
+				13FCE4E32C698C6D0021CBB2 /* InProgressViewController.m */,
+				13FCE4DF2C6989980021CBB2 /* DetailsViewController.h */,
+				13FCE4E02C6989980021CBB2 /* DetailsViewController.m */,
 				13ECF59B2C6966600090DB8E /* TodoNotesViewController.h */,
 				13ECF59C2C6966600090DB8E /* TodoNotesViewController.m */,
 			);
@@ -156,10 +176,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13FCE4E42C698C6D0021CBB2 /* InProgressViewController.m in Sources */,
 				13ECF58A2C69607D0090DB8E /* ViewController.m in Sources */,
 				13ECF5842C69607D0090DB8E /* AppDelegate.m in Sources */,
 				13ECF59D2C6966600090DB8E /* TodoNotesViewController.m in Sources */,
+				13FCE4E72C698C830021CBB2 /* DoneViewController.m in Sources */,
 				13FCE4E12C6989980021CBB2 /* DetailsViewController.m in Sources */,
+				134897CA2C699EF500B888A6 /* UserDefaults.m in Sources */,
+				134897C72C699E8A00B888A6 /* Tasks.m in Sources */,
 				13ECF5952C6960800090DB8E /* main.m in Sources */,
 				13ECF5872C69607D0090DB8E /* SceneDelegate.m in Sources */,
 			);

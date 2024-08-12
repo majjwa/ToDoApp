@@ -9,6 +9,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *prioritySegement;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *typeSegement;
 @property (weak, nonatomic) IBOutlet UIDatePicker *myDatePicker;
+
 @end
 
 @implementation DetailsViewController
@@ -31,9 +32,9 @@
     }
     
     Tasks *newTask = [[Tasks alloc] initWithTitle:self.myTitlee.text
-   description:self.myDescription.text
-  priority:self.prioritySegement.selectedSegmentIndex
-   type:self.typeSegement.selectedSegmentIndex
+    description:self.myDescription.text
+    priority:self.prioritySegement.selectedSegmentIndex
+    type:self.typeSegement.selectedSegmentIndex
  date:self.myDatePicker.date
 image:[self imageNameForPriority:self.prioritySegement.selectedSegmentIndex]];
     

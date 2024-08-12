@@ -240,7 +240,7 @@
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="addEditButton:" destination="8Zh-T3-sJj" eventType="touchUpInside" id="vbt-48-4K0"/>
+                                    <action selector="addEditButton:" destination="8Zh-T3-sJj" eventType="touchUpInside" id="r9b-OI-cyl"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dzv-X4-Ojn">

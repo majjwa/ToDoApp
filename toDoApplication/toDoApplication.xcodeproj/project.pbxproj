@@ -15,6 +15,7 @@
 		13ECF5922C6960800090DB8E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 13ECF5912C6960800090DB8E /* Base */; };
 		13ECF5952C6960800090DB8E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ECF5942C6960800090DB8E /* main.m */; };
 		13ECF59D2C6966600090DB8E /* TodoNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ECF59C2C6966600090DB8E /* TodoNotesViewController.m */; };
+		13FCE4E12C6989980021CBB2 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE4E02C6989980021CBB2 /* DetailsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		13ECF5942C6960800090DB8E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		13ECF59B2C6966600090DB8E /* TodoNotesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodoNotesViewController.h; sourceTree = "<group>"; };
 		13ECF59C2C6966600090DB8E /* TodoNotesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodoNotesViewController.m; sourceTree = "<group>"; };
+		13FCE4DF2C6989980021CBB2 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		13FCE4E02C6989980021CBB2 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +51,8 @@
 		13ECF5762C69607D0090DB8E = {
 			isa = PBXGroup;
 			children = (
+				13FCE4DF2C6989980021CBB2 /* DetailsViewController.h */,
+				13FCE4E02C6989980021CBB2 /* DetailsViewController.m */,
 				13ECF5812C69607D0090DB8E /* toDoApplication */,
 				13ECF5802C69607D0090DB8E /* Products */,
 			);
@@ -154,6 +159,7 @@
 				13ECF58A2C69607D0090DB8E /* ViewController.m in Sources */,
 				13ECF5842C69607D0090DB8E /* AppDelegate.m in Sources */,
 				13ECF59D2C6966600090DB8E /* TodoNotesViewController.m in Sources */,
+				13FCE4E12C6989980021CBB2 /* DetailsViewController.m in Sources */,
 				13ECF5952C6960800090DB8E /* main.m in Sources */,
 				13ECF5872C69607D0090DB8E /* SceneDelegate.m in Sources */,
 			);

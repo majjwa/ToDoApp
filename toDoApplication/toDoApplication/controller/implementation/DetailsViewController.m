@@ -1,6 +1,5 @@
 #import "DetailsViewController.h"
 #import "Tasks.h"
-#import "UserDefaults.h"
 
 @interface DetailsViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *myImage;
@@ -18,15 +17,16 @@
     [super viewDidLoad];
     
     if (self.isEditingTask) {
-        [self addTask:self.taskToEdit];
-        self.addEditButton.titleLabel.text = @"Edit";
+        [self populateFieldsWithTask:self.taskToEdit];
+        [self.addEditButton setTitle:@"Edit" forState:UIControlStateNormal];
+        
     }
     
     [self updateImage:self.prioritySegement.selectedSegmentIndex];
     [self.prioritySegement addTarget:self action:@selector(priorityChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
-- (void)addTask:(Tasks *)task {
+- (void)populateFieldsWithTask:(Tasks *)task {
     self.myTitlee.text = task.title;
     self.myDescription.text = task.discription;
     self.prioritySegement.selectedSegmentIndex = task.priority;
@@ -35,7 +35,8 @@
     [self updateImage:task.priority];
 }
 
-- (IBAction)addEditButton:(UIButton *)sender {
+- (IBAction)addEditButtonTapped:(UIButton *)sender {
+    
     if (self.myTitlee.text.length == 0 || self.myDescription.text.length == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
          message:@"Please fill in all fields." preferredStyle:UIAlertControllerStyleAlert];
@@ -69,11 +70,11 @@
         task.image = imageName;
     } else {
         task = [[Tasks alloc] initWithTitle:self.myTitlee.text
-      description:self.myDescription.text
-      priority:self.prioritySegement.selectedSegmentIndex
-      type:self.typeSegement.selectedSegmentIndex
-      date:self.myDatePicker.date
-      image:imageName];
+           description:self.myDescription.text
+              priority:self.prioritySegement.selectedSegmentIndex
+                                       type:self.typeSegement.selectedSegmentIndex
+                                        date:self.myDatePicker.date
+                                       image:imageName];
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -105,10 +106,9 @@
     [defaults setObject:newData forKey:@"userTasks"];
     [defaults synchronize];
     
-    NSLog(@"Task %@ successfully.", self.isEditingTask ? @"updated" : @"added");
-    
+    NSString *message = self.isEditingTask ? @"Are u sure u want to edit? " : @"Add Successful";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert"
-  message:self.isEditingTask ? @"Edit Success" : @"Add Success" preferredStyle:UIAlertControllerStyleActionSheet];
+  message:message preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self.navigationController popViewControllerAnimated:YES];

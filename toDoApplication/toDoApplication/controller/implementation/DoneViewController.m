@@ -1,4 +1,3 @@
-//
 //  DoneViewController.m
 //  toDoApplication
 //
@@ -6,8 +5,12 @@
 //
 
 #import "DoneViewController.h"
+#import "Tasks.h"
 
-@interface DoneViewController ()
+@interface DoneViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *DoneTable;
+
 
 @end
 
@@ -15,17 +18,83 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    // Set up the table view data source and delegate
+    self.DoneTable.dataSource = self;
+    self.DoneTable.delegate = self;
+
+    [self loadTasks];
+    [self organizeTasksByPriority];
+  
+    [self.DoneTable reloadData];
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [self loadTasks];
+    [self organizeTasksByPriority];
+    [self.DoneTable reloadData];
+}
+- (void)loadTasks {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [defaults objectForKey:@"userTasks"];
+    
+    if (data) {
+        NSError *error;
+        NSSet *classes = [NSSet setWithArray:@[[NSMutableArray class], [Tasks class]]];
+        self.allTasks = [NSKeyedUnarchiver unarchivedObjectOfClasses:classes fromData:data error:&error];
+        if (error) {
+            NSLog(@"Error unarchiving tasks: %@", error.localizedDescription);
+            self.allTasks = [NSMutableArray array];
+        }
+    } else {
+        self.allTasks = [NSMutableArray array];
+    }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)organizeTasksByPriority {
+    self.tasksByPriority = [NSMutableArray arrayWithObjects:[NSMutableArray array], [NSMutableArray array], [NSMutableArray array], nil];
+    
+    for (Tasks *task in self.allTasks) {
+        if (task.type == 2) {
+            [self.tasksByPriority[task.priority] addObject:task];
+        }
+    }
 }
-*/
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 3;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.tasksByPriority[section].count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellIdentifier = @"DoneTaskCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+    }
+    
+    Tasks *task = self.tasksByPriority[indexPath.section][indexPath.row];
+    cell.textLabel.text = task.title;
+    cell.imageView.image = [UIImage imageNamed:task.image];
+    
+    return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return @"Low";
+        case 1:
+            return @"Medium";
+        case 2:
+            return @"High";
+        default:
+            return @"";
+    }
+}
 
 @end

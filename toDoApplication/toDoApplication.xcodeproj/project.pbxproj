@@ -63,10 +63,6 @@
 		13ECF5762C69607D0090DB8E = {
 			isa = PBXGroup;
 			children = (
-				134897C82C699EF400B888A6 /* UserDefaults.h */,
-				134897C92C699EF400B888A6 /* UserDefaults.m */,
-				134897C52C699E8A00B888A6 /* Tasks.h */,
-				134897C62C699E8A00B888A6 /* Tasks.m */,
 				13ECF5812C69607D0090DB8E /* toDoApplication */,
 				13ECF5802C69607D0090DB8E /* Products */,
 			);
@@ -83,6 +79,10 @@
 		13ECF5812C69607D0090DB8E /* toDoApplication */ = {
 			isa = PBXGroup;
 			children = (
+				134897C82C699EF400B888A6 /* UserDefaults.h */,
+				134897C92C699EF400B888A6 /* UserDefaults.m */,
+				134897C52C699E8A00B888A6 /* Tasks.h */,
+				134897C62C699E8A00B888A6 /* Tasks.m */,
 				13ECF5822C69607D0090DB8E /* AppDelegate.h */,
 				13ECF5832C69607D0090DB8E /* AppDelegate.m */,
 				13ECF5852C69607D0090DB8E /* SceneDelegate.h */,

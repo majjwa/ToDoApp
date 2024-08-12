@@ -87,7 +87,7 @@
         <!--Todo Notes-->
         <scene sceneID="n1m-sf-aYx">
             <objects>
-                <viewController id="Tbe-1f-L8A" customClass="TodoNotesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TodoNotesViewController" id="Tbe-1f-L8A" customClass="TodoNotesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nC5-Uv-5Bn">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -190,16 +190,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rqA-Y5-laP">
-                                <rect key="frame" x="141" y="440" width="236" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="low"/>
-                                    <segment title="medium"/>
-                                    <segment title="high"/>
-                                </segments>
-                                <color key="selectedSegmentTintColor" red="0.78039215689999997" green="0.1166306273" blue="0.43714213769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="WMj-a1-kR2">
                                 <rect key="frame" x="141" y="533" width="236" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -246,20 +236,41 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Add Task">
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="addEditButton:" destination="8Zh-T3-sJj" eventType="touchUpInside" id="vbt-48-4K0"/>
+                                </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="3" translatesAutoresizingMaskIntoConstraints="NO" id="Dzv-X4-Ojn">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dzv-X4-Ojn">
                                 <rect key="frame" x="25" y="116" width="343" height="101"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.78039215689999997" green="0.1166306273" blue="0.43714213769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="306-Aa-BLM">
+                                <rect key="frame" x="141" y="443" width="227" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="low"/>
+                                    <segment title="medium"/>
+                                    <segment title="high"/>
+                                </segments>
+                                <color key="selectedSegmentTintColor" red="0.78039215689999997" green="0.1166306273" blue="0.43714213769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fRT-1O-Ysy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <outlet property="myDatePicker" destination="AA5-p5-wh0" id="2c4-Z8-eDd"/>
+                        <outlet property="myDescription" destination="52t-Ld-yOf" id="zon-zY-njH"/>
+                        <outlet property="myImage" destination="Dzv-X4-Ojn" id="N2x-2d-QZj"/>
+                        <outlet property="myTitlee" destination="ex8-rv-QaU" id="XFW-Vl-99A"/>
+                        <outlet property="prioritySegement" destination="WMj-a1-kR2" id="gDO-gi-19Q"/>
+                        <outlet property="typeSegement" destination="WMj-a1-kR2" id="cb0-yj-6J1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jXk-ep-bfG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="28" y="94"/>
+            <point key="canvasLocation" x="26.717557251908396" y="93.661971830985919"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Grh-hv-EJN">
@@ -381,7 +392,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="3" width="520" height="494"/>
         <image name="checkmark.seal.fill" catalog="system" width="128" height="124"/>
         <image name="figure.run" catalog="system" width="115" height="128"/>
         <image name="list.bullet.rectangle.portrait" catalog="system" width="115" height="128"/>

@@ -14,21 +14,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSData *data = [defaults objectForKey:@"userTasks"];
-    if (data) {
-        NSError *error;
-        NSSet *classes = [NSSet setWithArray:@[[NSMutableArray class], [Tasks class]]];
-        self.tasksArray = [NSKeyedUnarchiver unarchivedObjectOfClasses:classes fromData:data error:&error];
-        if (error) {
-            NSLog(@"Error unarchiving tasks: %@", error.localizedDescription);
-        }
-    } else {
-        self.tasksArray = [NSMutableArray array];
-    }
-    
     self.toDoNotesTable.dataSource = self;
     self.toDoNotesTable.delegate = self;
+    
+    [self loadTasks];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -74,20 +63,25 @@
     return cell;
 }
 
-
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-
     UIContextualAction *editAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal
-     title:@"Edit"
-  handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [self editTaskAtIndexPath:indexPath];
+       title:@"Edit"
+           handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        Tasks *taskToEdit = self.tasksArray[indexPath.row];
+        DetailsViewController *detailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
+        
+        detailsVC.taskToEdit = taskToEdit;
+        detailsVC.isEditingTask = YES;
+        [self.navigationController pushViewController:detailsVC animated:YES];
         completionHandler(YES);
     }];
     editAction.backgroundColor = [UIColor blackColor];
-  
+    
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive
-    title:@"Delete" handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [self deleteTaskAtIndexPath:indexPath];
+   title:@"Delete" handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        [self.tasksArray removeObjectAtIndex:indexPath.row];
+        [self saveTasks];
+        [self.toDoNotesTable deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         completionHandler(YES);
     }];
     deleteAction.backgroundColor = [UIColor redColor];
@@ -98,22 +92,13 @@
     return config;
 }
 
-- (void)editTaskAtIndexPath:(NSIndexPath *)indexPath {
-   Tasks *taskToEdit = self.tasksArray[indexPath.row];
-   DetailsViewController *detailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
- 
-   detailsVC.taskToEdit = taskToEdit;
-    detailsVC.isEditingTask = YES;
-[self.navigationController pushViewController:detailsVC animated:YES];
-}
 
-- (void)deleteTaskAtIndexPath:(NSIndexPath *)indexPath {
-   [self.tasksArray removeObjectAtIndex:indexPath.row];
+
+- (void)saveTasks {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *newData = [NSKeyedArchiver archivedDataWithRootObject:self.tasksArray requiringSecureCoding:YES error:nil];
     [defaults setObject:newData forKey:@"userTasks"];
     [defaults synchronize];
-    [self.toDoNotesTable deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

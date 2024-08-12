@@ -9,7 +9,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *prioritySegement;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *typeSegement;
 @property (weak, nonatomic) IBOutlet UIDatePicker *myDatePicker;
-
+@property (weak, nonatomic) IBOutlet UIButton *addEditButton;
 @end
 
 @implementation DetailsViewController
@@ -17,26 +17,64 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (self.isEditingTask) {
+        [self populateFieldsWithTask:self.taskToEdit];
+        self.addEditButton.titleLabel.text = @"Edit";
+    } 
+    
     [self updateImage:self.prioritySegement.selectedSegmentIndex];
+    [self.prioritySegement addTarget:self action:@selector(priorityChanged:) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)populateFieldsWithTask:(Tasks *)task {
+    self.myTitlee.text = task.title;
+    self.myDescription.text = task.discription;
+    self.prioritySegement.selectedSegmentIndex = task.priority;
+    self.typeSegement.selectedSegmentIndex = task.type;
+    self.myDatePicker.date = task.date;
+    [self updateImage:task.priority];
 }
 
 - (IBAction)addEditButton:(UIButton *)sender {
     if (self.myTitlee.text.length == 0 || self.myDescription.text.length == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-      message:@"Please fill in all fields."
-    preferredStyle:UIAlertControllerStyleAlert];
+         message:@"Please fill in all fields." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:okAction];
         [self presentViewController:alert animated:YES completion:nil];
         return;
     }
     
-    Tasks *newTask = [[Tasks alloc] initWithTitle:self.myTitlee.text
-    description:self.myDescription.text
-    priority:self.prioritySegement.selectedSegmentIndex
-    type:self.typeSegement.selectedSegmentIndex
- date:self.myDatePicker.date
-image:[self imageNameForPriority:self.prioritySegement.selectedSegmentIndex]];
+    NSString *imageName;
+    switch (self.prioritySegement.selectedSegmentIndex) {
+        case 0:
+            imageName = @"low";
+            break;
+        case 1:
+            imageName = @"med";
+            break;
+        default:
+            imageName = @"high";
+            break;
+    }
+    
+    Tasks *task;
+    if (self.isEditingTask) {
+        task = self.taskToEdit;
+        task.title = self.myTitlee.text;
+        task.discription = self.myDescription.text;
+        task.priority = self.prioritySegement.selectedSegmentIndex;
+        task.type = self.typeSegement.selectedSegmentIndex;
+        task.date = self.myDatePicker.date;
+        task.image = imageName;
+    } else {
+        task = [[Tasks alloc] initWithTitle:self.myTitlee.text
+      description:self.myDescription.text
+      priority:self.prioritySegement.selectedSegmentIndex
+      type:self.typeSegement.selectedSegmentIndex
+      date:self.myDatePicker.date
+      image:imageName];
+    }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *data = [defaults objectForKey:@"userTasks"];
@@ -51,19 +89,30 @@ image:[self imageNameForPriority:self.prioritySegement.selectedSegmentIndex]];
             tasksArray = [NSMutableArray array];
         }
     }
-    [tasksArray addObject:newTask];
-  
+    
+    if (self.isEditingTask) {
+        NSInteger index = [tasksArray indexOfObject:self.taskToEdit];
+        if (index != NSNotFound) {
+            [tasksArray replaceObjectAtIndex:index withObject:task];
+        } else {
+            NSLog(@"Error: Task to edit not found in the array.");
+        }
+    } else {
+        [tasksArray addObject:task];
+    }
+    
     NSData *newData = [NSKeyedArchiver archivedDataWithRootObject:tasksArray requiringSecureCoding:YES error:nil];
     [defaults setObject:newData forKey:@"userTasks"];
     [defaults synchronize];
     
-    NSLog(@"Task added successfully.");
+    NSLog(@"Task %@ successfully.", self.isEditingTask ? @"updated" : @"added");
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert"
-  message:@"Add Success" preferredStyle:UIAlertControllerStyleActionSheet];
+  message:self.isEditingTask ? @"Edit Success" : @"Add Success" preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self.navigationController popViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TasksUpdatedNotification" object:nil];
     }];
     
     UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:NULL];
@@ -72,19 +121,24 @@ image:[self imageNameForPriority:self.prioritySegement.selectedSegmentIndex]];
     [self presentViewController:alert animated:YES completion:NULL];
 }
 
-- (NSString *)imageNameForPriority:(NSInteger)priorityIndex {
+- (void)updateImage:(NSInteger)priorityIndex {
+    NSString *imageName;
     switch (priorityIndex) {
         case 0:
-            return @"high";
+            imageName = @"low";
+            break;
         case 1:
-            return @"med";
+            imageName = @"med";
+            break;
         default:
-            return @"low";
+            imageName = @"high";
+            break;
     }
+    self.myImage.image = [UIImage imageNamed:imageName];
 }
 
-- (void)updateImage:(NSInteger)priorityIndex {
-    self.myImage.image = [UIImage imageNamed:[self imageNameForPriority:priorityIndex]];
+- (void)priorityChanged:(UISegmentedControl *)sender {
+    [self updateImage:sender.selectedSegmentIndex];
 }
 
 @end

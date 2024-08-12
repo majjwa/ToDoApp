@@ -263,17 +263,18 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="addEditButton" destination="49C-6h-2XP" id="uqN-T5-Rxf"/>
                         <outlet property="myDatePicker" destination="AA5-p5-wh0" id="2c4-Z8-eDd"/>
                         <outlet property="myDescription" destination="52t-Ld-yOf" id="zon-zY-njH"/>
                         <outlet property="myImage" destination="Dzv-X4-Ojn" id="N2x-2d-QZj"/>
                         <outlet property="myTitlee" destination="ex8-rv-QaU" id="XFW-Vl-99A"/>
-                        <outlet property="prioritySegement" destination="WMj-a1-kR2" id="gDO-gi-19Q"/>
-                        <outlet property="typeSegement" destination="WMj-a1-kR2" id="cb0-yj-6J1"/>
+                        <outlet property="prioritySegement" destination="306-Aa-BLM" id="aKr-c9-z0c"/>
+                        <outlet property="typeSegement" destination="WMj-a1-kR2" id="dIA-dY-gBJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jXk-ep-bfG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="26.717557251908396" y="93.661971830985919"/>
+            <point key="canvasLocation" x="36" y="94"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Grh-hv-EJN">

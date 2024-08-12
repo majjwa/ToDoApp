@@ -10,9 +10,10 @@
 #import "UserDefaults.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TodoNotesViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface TodoNotesViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 @property (nonatomic, strong) NSMutableArray<Tasks *> *tasksArray;
-
+@property (nonatomic, strong) NSMutableArray<Tasks *> *filteredTasks;
+@property BOOL isSearching;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -134,6 +134,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="mySearchbar" destination="CdM-Kw-K6s" id="ibw-eU-BJ4"/>
                         <outlet property="toDoNotesTable" destination="m1h-ni-Ost" id="2vj-Nk-m3b"/>
                     </connections>
                 </viewController>

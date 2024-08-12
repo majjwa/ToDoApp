@@ -3,8 +3,8 @@
 #import "Tasks.h"
 #import "DetailsViewController.h"
 
-@interface TodoNotesViewController () <UITableViewDataSource, UITableViewDelegate>
-
+@interface TodoNotesViewController () 
+@property (weak, nonatomic) IBOutlet UISearchBar *mySearchbar;
 @property (weak, nonatomic) IBOutlet UITableView *toDoNotesTable;
 
 @end
@@ -16,7 +16,9 @@
     
     self.toDoNotesTable.dataSource = self;
     self.toDoNotesTable.delegate = self;
-    
+    self.mySearchbar.delegate = self;
+    self.filteredTasks = [NSMutableArray array];
+    self.isSearching = NO;
     [self loadTasks];
 }
 
@@ -46,8 +48,9 @@
     [self.navigationController pushViewController:detailsVC animated:YES];
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.tasksArray.count;
+    return self.isSearching ? self.filteredTasks.count : self.tasksArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -56,18 +59,40 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
     
-    Tasks *task = self.tasksArray[indexPath.row];
+    Tasks *task = self.isSearching ? self.filteredTasks[indexPath.row] : self.tasksArray[indexPath.row];
     cell.textLabel.text = task.title;
     cell.imageView.image = [UIImage imageNamed:task.image];
     
     return cell;
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (searchText.length == 0) {
+        self.isSearching = NO;
+        [self.filteredTasks removeAllObjects];
+        [self.toDoNotesTable reloadData];
+    } else {
+        self.isSearching = YES;
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.title CONTAINS[cd] %@", searchText];
+        self.filteredTasks = [[self.tasksArray filteredArrayUsingPredicate:predicate] mutableCopy];
+        [self.toDoNotesTable reloadData];
+    }
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [searchBar setText:@""];
+    [searchBar resignFirstResponder];
+    self.isSearching = NO;
+    [self.filteredTasks removeAllObjects];
+    [self.toDoNotesTable reloadData];
+}
+
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Tasks *taskToEdit = self.isSearching ? self.filteredTasks[indexPath.row] : self.tasksArray[indexPath.row];
+    
     UIContextualAction *editAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal
        title:@"Edit"
            handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        Tasks *taskToEdit = self.tasksArray[indexPath.row];
         DetailsViewController *detailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
         
         detailsVC.taskToEdit = taskToEdit;
@@ -79,7 +104,7 @@
     
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive
    title:@"Delete" handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [self.tasksArray removeObjectAtIndex:indexPath.row];
+        [self.tasksArray removeObject:taskToEdit];
         [self saveTasks];
         [self.toDoNotesTable deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         completionHandler(YES);
@@ -91,6 +116,7 @@
     
     return config;
 }
+
 
 
 

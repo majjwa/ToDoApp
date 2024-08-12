@@ -18,15 +18,15 @@
     [super viewDidLoad];
     
     if (self.isEditingTask) {
-        [self populateFieldsWithTask:self.taskToEdit];
+        [self addTask:self.taskToEdit];
         self.addEditButton.titleLabel.text = @"Edit";
-    } 
+    }
     
     [self updateImage:self.prioritySegement.selectedSegmentIndex];
     [self.prioritySegement addTarget:self action:@selector(priorityChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
-- (void)populateFieldsWithTask:(Tasks *)task {
+- (void)addTask:(Tasks *)task {
     self.myTitlee.text = task.title;
     self.myDescription.text = task.discription;
     self.prioritySegement.selectedSegmentIndex = task.priority;

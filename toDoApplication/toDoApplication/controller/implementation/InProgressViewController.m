@@ -29,9 +29,12 @@
     [self filterInProgressTasks];
     
     
-    [self.inProgressTable reloadData];
+    [self.inProgressTable reloadData]; [self updatePlaceholderVisibility];
 }
 
+- (void)updatePlaceholderVisibility {
+    self.imagedefault.hidden = self.inProgressTasks.count > 0;
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadTasks];
@@ -69,6 +72,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    [self updatePlaceholderVisibility];
+
     return self.inProgressTasks.count;
 }
 

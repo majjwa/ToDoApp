@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DoneViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) NSMutableArray<Tasks *> *allTasks;
 @property (strong, nonatomic) NSMutableArray<NSMutableArray<Tasks *> *> *tasksByPriority;
+@property (weak, nonatomic) IBOutlet UIImageView *defaultimg;
+
 @end
 
 NS_ASSUME_NONNULL_END

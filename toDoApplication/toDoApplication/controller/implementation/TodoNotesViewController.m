@@ -11,6 +11,7 @@
 #import "DetailsViewController.h"
 
 @interface TodoNotesViewController () 
+@property (weak, nonatomic) IBOutlet UIImageView *defaultImage1;
 @property (weak, nonatomic) IBOutlet UISearchBar *mySearchbar;
 @property (weak, nonatomic) IBOutlet UITableView *toDoNotesTable;
 
@@ -27,7 +28,12 @@
     self.filteredTasks = [NSMutableArray array];
     //isfiltered = Yes
     self.isSearching = NO;
-}
+    [self updatePlaceholderVisibility];
+    }
+
+    - (void)updatePlaceholderVisibility {
+        self.defaultImage1.hidden = self.tasksArray.count > 0;
+    }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -76,6 +82,8 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    [self updatePlaceholderVisibility];
+
     return self.isSearching ? self.filteredTasks.count : self.tasksArray.count;
 }
 

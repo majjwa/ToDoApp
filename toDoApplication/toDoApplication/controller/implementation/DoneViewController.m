@@ -1,8 +1,8 @@
-// 
-//  DoneViewController.m
-//  toDoApplication
 //
-//  Created by marwa maky on 12/08/2024.
+// DoneViewController.m
+// toDoApplication
+//
+// Created by marwa maky on 12/08/2024.
 //
 
 #import "DoneViewController.h"
@@ -11,6 +11,7 @@
 @interface DoneViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *DoneTable;
+
 
 @end
 
@@ -23,8 +24,15 @@
     self.DoneTable.delegate = self;
     [self loadTasks];
     [self TasksByPriority];
-  
+    
     [self.DoneTable reloadData];
+    [self updatePlaceholderVisibility]; // Update visibility of default image
+}
+
+- (void)updatePlaceholderVisibility {
+    // Show the placeholder image if there are no tasks
+    self.defaultimg.hidden = self.allTasks.count > 0;
+    self.DoneTable.hidden = self.allTasks.count == 0; // Hide table view if no tasks
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -32,16 +40,12 @@
     [self loadTasks];
     [self TasksByPriority];
     [self.DoneTable reloadData];
+    [self updatePlaceholderVisibility]; // Update visibility on appearance
 }
 
 - (void)loadTasks {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *data = [defaults objectForKey:@"userTasks"];
-//    NSSet *classes = [NSSet setWithArray:@[[NSMutableArray class], [Tasks class]]];
-//    self.allTasks = [NSKeyedUnarchiver unarchivedObjectOfClasses:classes fromData:data error:&error];
-//    if (error) {
-//        NSLog(@"Error unarchiving tasks: %@", error.localizedDescription);
-//        self.allTasks = [NSMutableArray array];
     if (data) {
         NSError *error;
         NSSet *classes = [NSSet setWithArray:@[[NSMutableArray class], [Tasks class]]];
@@ -58,14 +62,8 @@
 - (void)TasksByPriority {
     self.tasksByPriority = [NSMutableArray arrayWithObjects:[NSMutableArray array], [NSMutableArray array], [NSMutableArray array], nil];
     
-    
-    
-    
     for (Tasks *task in self.allTasks) {
-      // done task
-        if (task.type == 2) {
-            
-            
+        if (task.type == 2) { // Done task
             [self.tasksByPriority[task.priority] addObject:task];
         }
     }
@@ -76,6 +74,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    [self updatePlaceholderVisibility]; // Ensure placeholder visibility is updated
     return self.tasksByPriority[section].count;
 }
 
@@ -109,15 +108,14 @@
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     Tasks *taskToDelete = self.tasksByPriority[indexPath.section][indexPath.row];
 
-UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive
-    title:@"Delete" handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive
+        title:@"Delete" handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
 
-    
-    
-    [self.tasksByPriority[indexPath.section] removeObject:taskToDelete];
+        [self.tasksByPriority[indexPath.section] removeObject:taskToDelete];
         [self.allTasks removeObject:taskToDelete];
         [self saveTasks];
         [self.DoneTable deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self updatePlaceholderVisibility]; // Update placeholder visibility after deletion
         completionHandler(YES);
     }];
     deleteAction.backgroundColor = [UIColor lightGrayColor];

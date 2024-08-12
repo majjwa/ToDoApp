@@ -1,8 +1,3 @@
-//
-// TodoNotesViewController.m
-//  toDoApplication
-//  Created by marwa maky on 12/08/2024.
-
 #import "DetailsViewController.h"
 #import "Tasks.h"
 
@@ -24,7 +19,8 @@
     if (self.isEditingTask) {
         [self populateFieldsWithTask:self.taskToEdit];
         [self.addEditButton setTitle:@"Edit" forState:UIControlStateNormal];
-        
+    } else {
+        [self.addEditButton setTitle:@"Add" forState:UIControlStateNormal];
     }
     
     [self updateImage:self.prioritySegement.selectedSegmentIndex];
@@ -32,6 +28,8 @@
 }
 
 - (void)populateFieldsWithTask:(Tasks *)task {
+    NSLog(@"Editing Task: %@", task.title);
+
     self.myTitlee.text = task.title;
     self.myDescription.text = task.discription;
     self.prioritySegement.selectedSegmentIndex = task.priority;
@@ -39,13 +37,14 @@
     self.myDatePicker.date = task.date;
     [self updateImage:task.priority];
 }
-
 - (IBAction)addEditButtonTapped:(UIButton *)sender {
-    
     if (self.myTitlee.text.length == 0 || self.myDescription.text.length == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-         message:@"Please fill in all fields." preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+                                                                       message:@"Please fill in all fields."
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:nil];
         [alert addAction:okAction];
         [self presentViewController:alert animated:YES completion:nil];
         return;
@@ -64,26 +63,8 @@
             break;
     }
     
-    Tasks *task;
-    if (self.isEditingTask) {
-        task = self.taskToEdit;
-        task.title = self.myTitlee.text;
-        task.discription = self.myDescription.text;
-        task.priority = self.prioritySegement.selectedSegmentIndex;
-        task.type = self.typeSegement.selectedSegmentIndex;
-        task.date = self.myDatePicker.date;
-        task.image = imageName;
-    } else {
-        task = [[Tasks alloc] initWithTitle:self.myTitlee.text
-           description:self.myDescription.text
-              priority:self.prioritySegement.selectedSegmentIndex
-                                       type:self.typeSegement.selectedSegmentIndex
-                                        date:self.myDatePicker.date
-                                       image:imageName];
-    }
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSData *data = [defaults objectForKey:@"userTasks"];
+    // Load existing tasks
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"userTasks"];
     NSMutableArray<Tasks *> *tasksArray = [NSMutableArray array];
     
     if (data) {
@@ -97,34 +78,58 @@
     }
     
     if (self.isEditingTask) {
-        NSInteger index = [tasksArray indexOfObject:self.taskToEdit];
-        if (index != NSNotFound) {
-            [tasksArray replaceObjectAtIndex:index withObject:task];
-        } else {
+        BOOL taskFound = NO;
+        for (Tasks *existingTask in tasksArray) {
+            if ([existingTask.title isEqualToString:self.taskToEdit.title]) {
+                existingTask.title = self.myTitlee.text;
+                existingTask.discription = self.myDescription.text;
+                existingTask.priority = self.prioritySegement.selectedSegmentIndex;
+                existingTask.type = self.typeSegement.selectedSegmentIndex;
+                existingTask.date = self.myDatePicker.date;
+                existingTask.image = imageName;
+                taskFound = YES;
+                break;
+            }
+        }
+        if (!taskFound) {
             NSLog(@"Error: Task to edit not found in the array.");
         }
     } else {
-        [tasksArray addObject:task];
+        Tasks *newTask = [[Tasks alloc] init];
+        newTask.title = self.myTitlee.text;
+        newTask.discription = self.myDescription.text;
+        newTask.priority = self.prioritySegement.selectedSegmentIndex;
+        newTask.type = self.typeSegement.selectedSegmentIndex;
+        newTask.date = self.myDatePicker.date;
+        newTask.image = imageName;
+        [tasksArray addObject:newTask];
     }
     
+    // Save updated tasks
     NSData *newData = [NSKeyedArchiver archivedDataWithRootObject:tasksArray requiringSecureCoding:YES error:nil];
-    [defaults setObject:newData forKey:@"userTasks"];
-    [defaults synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:newData forKey:@"userTasks"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
-    NSString *message = self.isEditingTask ? @"Are u sure u want to edit? " : @"Task Added";
+    NSString *message = self.isEditingTask ? @"Are you sure you want to edit?" : @"Task added successfully";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert"
-  message:message preferredStyle:UIAlertControllerStyleActionSheet];
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"Confirm"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * _Nonnull action) {
         [self.navigationController popViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TasksUpdatedNotification" object:nil];
     }];
     
-    UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:NULL];
+    UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:nil];
     [alert addAction:confirm];
     [alert addAction:dismiss];
-    [self presentViewController:alert animated:YES completion:NULL];
+    [self presentViewController:alert animated:YES completion:nil];
 }
+
 
 - (void)updateImage:(NSInteger)priorityIndex {
     NSString *imageName;

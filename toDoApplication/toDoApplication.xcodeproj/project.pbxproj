@@ -60,6 +60,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		139960822C6A3FF60074CB81 /* userDefault */ = {
+			isa = PBXGroup;
+			children = (
+				134897C62C699E8A00B888A6 /* Tasks.m */,
+				134897C52C699E8A00B888A6 /* Tasks.h */,
+				134897C92C699EF400B888A6 /* UserDefaults.m */,
+				134897C82C699EF400B888A6 /* UserDefaults.h */,
+			);
+			path = userDefault;
+			sourceTree = "<group>";
+		};
+		139960832C6A40280074CB81 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				139960842C6A40310074CB81 /* local */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		139960842C6A40310074CB81 /* local */ = {
+			isa = PBXGroup;
+			children = (
+				139960822C6A3FF60074CB81 /* userDefault */,
+			);
+			path = local;
+			sourceTree = "<group>";
+		};
 		13ECF5762C69607D0090DB8E = {
 			isa = PBXGroup;
 			children = (
@@ -79,10 +106,7 @@
 		13ECF5812C69607D0090DB8E /* toDoApplication */ = {
 			isa = PBXGroup;
 			children = (
-				134897C82C699EF400B888A6 /* UserDefaults.h */,
-				134897C92C699EF400B888A6 /* UserDefaults.m */,
-				134897C52C699E8A00B888A6 /* Tasks.h */,
-				134897C62C699E8A00B888A6 /* Tasks.m */,
+				139960832C6A40280074CB81 /* model */,
 				13ECF5822C69607D0090DB8E /* AppDelegate.h */,
 				13ECF5832C69607D0090DB8E /* AppDelegate.m */,
 				13ECF5852C69607D0090DB8E /* SceneDelegate.h */,

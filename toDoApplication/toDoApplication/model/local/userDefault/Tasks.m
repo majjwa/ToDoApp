@@ -5,10 +5,14 @@
 
 @implementation Tasks
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
+/*
+ image
+ title
+ type
+ date
+ dis
+ priority
+ */
 - (void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeObject:self.image forKey:@"image"];
     [encoder encodeObject:self.title forKey:@"title"];
@@ -40,6 +44,9 @@
         _image = image;
     }
     return self;
+}
++ (BOOL)supportsSecureCoding {
+    return YES;
 }
 
 @end

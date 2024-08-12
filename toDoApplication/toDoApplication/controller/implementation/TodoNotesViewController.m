@@ -25,6 +25,7 @@
     self.toDoNotesTable.delegate = self;
     self.mySearchbar.delegate = self;
     self.filteredTasks = [NSMutableArray array];
+    //isfiltered = Yes
     self.isSearching = NO;
 }
 
@@ -35,7 +36,14 @@
 }
 
 
-
+/*
+ - (void)saveTasks {
+     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+     NSData *newData = [NSKeyedArchiver archivedDataWithRootObject:self.tasksArray requiringSecureCoding:YES error:nil];
+     [defaults setObject:newData forKey:@""];
+     [defaults synchronize];
+ }
+ */
 - (void)loadTasks {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *data = [defaults objectForKey:@"userTasks"];

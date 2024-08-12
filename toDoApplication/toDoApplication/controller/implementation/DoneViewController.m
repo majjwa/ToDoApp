@@ -18,13 +18,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Set up the table view data source and delegate
+
     self.DoneTable.dataSource = self;
     self.DoneTable.delegate = self;
-
     [self loadTasks];
-    [self organizeTasksByPriority];
+    [self TasksByPriority];
   
     [self.DoneTable reloadData];
 }
@@ -32,14 +30,18 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadTasks];
-    [self organizeTasksByPriority];
+    [self TasksByPriority];
     [self.DoneTable reloadData];
 }
 
 - (void)loadTasks {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *data = [defaults objectForKey:@"userTasks"];
-    
+//    NSSet *classes = [NSSet setWithArray:@[[NSMutableArray class], [Tasks class]]];
+//    self.allTasks = [NSKeyedUnarchiver unarchivedObjectOfClasses:classes fromData:data error:&error];
+//    if (error) {
+//        NSLog(@"Error unarchiving tasks: %@", error.localizedDescription);
+//        self.allTasks = [NSMutableArray array];
     if (data) {
         NSError *error;
         NSSet *classes = [NSSet setWithArray:@[[NSMutableArray class], [Tasks class]]];
@@ -53,18 +55,24 @@
     }
 }
 
-- (void)organizeTasksByPriority {
+- (void)TasksByPriority {
     self.tasksByPriority = [NSMutableArray arrayWithObjects:[NSMutableArray array], [NSMutableArray array], [NSMutableArray array], nil];
     
+    
+    
+    
     for (Tasks *task in self.allTasks) {
-        if (task.type == 2) { // Filter for "Done" tasks
+      // done task
+        if (task.type == 2) {
+            
+            
             [self.tasksByPriority[task.priority] addObject:task];
         }
     }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3; // Low, Medium, High
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -72,11 +80,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"DoneTaskCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
     
     Tasks *task = self.tasksByPriority[indexPath.section][indexPath.row];
@@ -102,9 +109,12 @@
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     Tasks *taskToDelete = self.tasksByPriority[indexPath.section][indexPath.row];
 
-    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive
- title:@"Delete" handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [self.tasksByPriority[indexPath.section] removeObject:taskToDelete];
+UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive
+    title:@"Delete" handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+
+    
+    
+    [self.tasksByPriority[indexPath.section] removeObject:taskToDelete];
         [self.allTasks removeObject:taskToDelete];
         [self saveTasks];
         [self.DoneTable deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];

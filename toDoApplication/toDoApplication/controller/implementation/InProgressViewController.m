@@ -24,8 +24,10 @@
     self.inProgressTable.dataSource = self;
     self.inProgressTable.delegate = self;
    
+    
     [self loadTasks];
     [self filterInProgressTasks];
+    
     
     [self.inProgressTable reloadData];
 }
@@ -58,7 +60,9 @@
     self.inProgressTasks = [NSMutableArray array];
     
     for (Tasks *task in self.allTasks) {
-        if (task.type == 1) { // Assuming type 1 means "in progress"
+       
+        
+        if (task.type == 1) {
             [self.inProgressTasks addObject:task];
         }
     }
@@ -88,7 +92,8 @@
     UIContextualAction *editAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal
        title:@"Edit"
            handler:^(UIContextualAction * _Nonnull action, UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        DetailsViewController *detailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
+        DetailsViewController *detailsVC = [self.storyboard
+                        instantiateViewControllerWithIdentifier:@"DetailsViewController"];
         detailsVC.taskToEdit = taskToEdit;
         detailsVC.isEditingTask = YES;
         [self.navigationController pushViewController:detailsVC animated:YES];

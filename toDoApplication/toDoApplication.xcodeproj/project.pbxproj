@@ -91,6 +91,8 @@
 			isa = PBXGroup;
 			children = (
 				13ECF58B2C69607D0090DB8E /* Main.storyboard */,
+				13ECF5902C6960800090DB8E /* LaunchScreen.storyboard */,
+				13ECF58E2C6960800090DB8E /* Assets.xcassets */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -113,6 +115,8 @@
 				13FCE4E62C698C830021CBB2 /* DoneViewController.m */,
 				13ECF5892C69607D0090DB8E /* ViewController.m */,
 				13ECF5942C6960800090DB8E /* main.m */,
+				13ECF5832C69607D0090DB8E /* AppDelegate.m */,
+				13ECF5862C69607D0090DB8E /* SceneDelegate.m */,
 			);
 			path = implementation;
 			sourceTree = "<group>";
@@ -125,6 +129,8 @@
 				13FCE4E22C698C6D0021CBB2 /* InProgressViewController.h */,
 				13FCE4E52C698C830021CBB2 /* DoneViewController.h */,
 				13ECF5882C69607D0090DB8E /* ViewController.h */,
+				13ECF5822C69607D0090DB8E /* AppDelegate.h */,
+				13ECF5852C69607D0090DB8E /* SceneDelegate.h */,
 			);
 			path = interface;
 			sourceTree = "<group>";
@@ -148,15 +154,9 @@
 		13ECF5812C69607D0090DB8E /* toDoApplication */ = {
 			isa = PBXGroup;
 			children = (
-				139960872C6A40BF0074CB81 /* controller */,
-				139960862C6A40B70074CB81 /* view */,
 				139960832C6A40280074CB81 /* model */,
-				13ECF5822C69607D0090DB8E /* AppDelegate.h */,
-				13ECF5832C69607D0090DB8E /* AppDelegate.m */,
-				13ECF5852C69607D0090DB8E /* SceneDelegate.h */,
-				13ECF5862C69607D0090DB8E /* SceneDelegate.m */,
-				13ECF58E2C6960800090DB8E /* Assets.xcassets */,
-				13ECF5902C6960800090DB8E /* LaunchScreen.storyboard */,
+				139960862C6A40B70074CB81 /* view */,
+				139960872C6A40BF0074CB81 /* controller */,
 				13ECF5932C6960800090DB8E /* Info.plist */,
 			);
 			path = toDoApplication;

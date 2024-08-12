@@ -17,17 +17,15 @@
     [super viewDidLoad];
     
     if (self.isEditingTask) {
-        [self populateFieldsWithTask:self.taskToEdit];
-        [self.addEditButton setTitle:@"Edit" forState:UIControlStateNormal];
-    } else {
-        [self.addEditButton setTitle:@"Add" forState:UIControlStateNormal];
+        [self addFieldsWithTask:self.taskToEdit];
+        self.addEditButton.titleLabel.text = @"Edit Task";
     }
     
     [self updateImage:self.prioritySegement.selectedSegmentIndex];
     [self.prioritySegement addTarget:self action:@selector(priorityChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
-- (void)populateFieldsWithTask:(Tasks *)task {
+- (void)addFieldsWithTask:(Tasks *)task {
     NSLog(@"Editing Task: %@", task.title);
 
     self.myTitlee.text = task.title;
@@ -39,12 +37,10 @@
 }
 - (IBAction)addEditButtonTapped:(UIButton *)sender {
     if (self.myTitlee.text.length == 0 || self.myDescription.text.length == 0) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                       message:@"Please fill in all fields."
-                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error Saving Task"
+          message:@"Please fill in all fields." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
-                                                             style:UIAlertActionStyleDefault
-                                                           handler:nil];
+         style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:okAction];
         [self presentViewController:alert animated:YES completion:nil];
         return;
@@ -112,19 +108,16 @@
     
     NSString *message = self.isEditingTask ? @"Are you sure you want to edit?" : @"Task added successfully";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert"
-                                                                   message:message
-                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+     message:message  preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"Confirm"
-                                                        style:UIAlertActionStyleDefault
-                                                      handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"Confirm"  style:UIAlertActionStyleDefault
+        handler:^(UIAlertAction * _Nonnull action) {
         [self.navigationController popViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TasksUpdatedNotification" object:nil];
     }];
     
     UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss"
-                                                        style:UIAlertActionStyleDefault
-                                                      handler:nil];
+   style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:confirm];
     [alert addAction:dismiss];
     [self presentViewController:alert animated:YES completion:nil];
